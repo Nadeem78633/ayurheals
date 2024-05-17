@@ -2,9 +2,9 @@ Absolutely! Let's make the README more engaging and user-friendly:
 
 ---
 
-# 🛒 E-Commerce App Prototype
+# 🛒 E-Commerce App 
 
-Welcome to our exciting E-Commerce App Prototype! This project is a fantastic blend of cutting-edge technology and creative design, aimed at giving you a taste of the fascinating world of mobile app development.
+Welcome to our exciting E-Commerce App  
 
 ## 🚀 Getting Started
 
@@ -28,34 +28,26 @@ To embark on this thrilling journey, follow these simple steps:
 
 4. **Run the App**: Follow the instructions provided by the Expo CLI to run the app on iOS, Android, or web platforms.
 
-## 📊 Data Magic
+## 📊 I have Used Apollo Client to fetch data
 
-Our app harnesses the power of GraphQL and the mock.shop API to fetch all the exciting product data you see on the screen. With seamless integration, we ensure you get the latest and greatest deals at your fingertips!
+Our app harnesses the power of ApolloClient and the mock.shop API to fetch all the exciting product data you see on the screen. With seamless integration, we ensure you get the latest and greatest deals at your fingertips!
 
-## 🎨 UI Wonderland
-
-Experience a visual feast with our beautifully crafted user interface! While functionality is paramount, we've sprinkled a dash of creativity to make navigating the app a delightful experience for all users.
 
 ## 🌟 Pages to Explore
 
-### Home Sweet Home
+### Home Page
 
 - Dive into the app with our captivating hero banner at the top.
 - Explore two curated collections, each showcasing must-have products with captivating titles, descriptions, and stunning visuals.
 
-### Product Paradise
+### Product Details Page
 
 - Immerse yourself in the world of your favorite products.
 - Dive deep into detailed product information, including titles, descriptions, eye-catching images, irresistible variations, and a tempting "Add to Cart" button.
 
-## 🤝 Contributions
+### Cart Page
+- I have added the cart cart page you find the all product which is added to the cart
+- Inside the cart on bottom navigation
 
-We love collaboration! If you have any bright ideas, enhancements, or fixes, don't hesitate to get involved. Open an issue or submit a pull request – we're all ears!
 
-## 📜 License
 
-This project is licensed under the [MIT License](LICENSE). Feel free to explore, modify, and share to your heart's content!
-
----
-
-Now, this README is not just informative but also invites users to explore and engage with the project. Let me know if you need further adjustments or have any other requests!

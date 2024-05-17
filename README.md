@@ -1,6 +1,4 @@
-Absolutely! Let's make the README more engaging and user-friendly:
 
----
 
 # 🛒 E-Commerce App 
 

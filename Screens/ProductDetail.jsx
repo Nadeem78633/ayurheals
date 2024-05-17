@@ -6,25 +6,31 @@ import {
   ToastAndroid,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ProductDetailScreen = ({ route, navigation }) => {
+const ProductDetailScreen = ({
+  route,
+  navigation,
+  cartItems,
+  setCartItems,
+}) => {
   const { product } = route.params;
 
   const handleAddToCart = async () => {
     try {
-      const cartItems = await AsyncStorage.getItem("cart");
-      let cart = cartItems ? JSON.parse(cartItems) : [];
-
-      const productIndex = cart.findIndex((item) => item.id === product.id);
+      const productIndex = cartItems.findIndex(
+        (item) => item.id === product.id
+      );
       if (productIndex >= 0) {
-        cart[productIndex].quantity += 1;
+        cartItems[productIndex].quantity += 1;
       } else {
-        cart.push({ ...product, quantity: 1 });
+        cartItems.push({ ...product, quantity: 1 });
       }
 
-      await AsyncStorage.setItem("cart", JSON.stringify(cart));
+      await AsyncStorage.setItem("cart", JSON.stringify(cartItems));
+      setCartItems([...cartItems]);
       ToastAndroid.show(`${product.title} added to cart`, ToastAndroid.SHORT);
     } catch (error) {
       ToastAndroid.show("Error adding to cart", ToastAndroid.SHORT);
@@ -32,25 +38,30 @@ const ProductDetailScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        {product && (
-          <>
-            <Image
-              source={{ uri: product.image.url }}
-              style={styles.cardImage}
-            />
-            <Text style={styles.title}>{product.title}</Text>
-            <Text style={styles.price}>100$</Text>
-            <Text style={styles.description}>{product.description}</Text>
+    <ScrollView
+      contentContainerStyle={styles.scrollViewContent}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.container}>
+        <View style={styles.card}>
+          {product && (
+            <>
+              <Image
+                source={{ uri: product.image.url }}
+                style={styles.cardImage}
+              />
+              <Text style={styles.title}>{product.title}</Text>
+              <Text style={styles.price}>100$</Text>
+              <Text style={styles.description}>{product.description}</Text>
 
-            <TouchableOpacity style={styles.button} onPress={handleAddToCart}>
-              <Text style={styles.buttonText}>Add to Cart</Text>
-            </TouchableOpacity>
-          </>
-        )}
+              <TouchableOpacity style={styles.button} onPress={handleAddToCart}>
+                <Text style={styles.buttonText}>Add to Cart</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -67,7 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
     overflow: "hidden",
-    padding: 20, 
+    padding: 20,
   },
   cardImage: {
     width: "100%",

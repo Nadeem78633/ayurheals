@@ -11,6 +11,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import hero from "../assets/images/hero.jpg";
 
+
 const GET_COLLECTIONS = gql`
   {
     collections(first: 4) {
@@ -77,6 +78,7 @@ const HomeScreen = () => {
       <Text style={styles.categoryTitle}>Tops & Unisex</Text>
       <View style={styles.cardContainer}>
         {topsCollections.map((collection) => (
+        
           <Pressable
             key={collection.node.id}
             style={styles.card}

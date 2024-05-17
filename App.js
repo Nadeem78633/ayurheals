@@ -20,7 +20,7 @@ const client = new ApolloClient({
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const HomeStack = ({ updateCartItemsCount }) => (
+const HomeStack = ({ updateCartItemsCount, cartItems, setCartItems }) => (
   <Stack.Navigator>
     <Stack.Screen
       name="HomeScreen"
@@ -30,6 +30,8 @@ const HomeStack = ({ updateCartItemsCount }) => (
     <Stack.Screen name="ProductDetails">
       {(props) => (
         <ProductDetailScreen
+          cartItems={cartItems}
+          setCartItems={setCartItems}
           {...props}
           updateCartItemsCount={updateCartItemsCount}
         />
@@ -39,14 +41,17 @@ const HomeStack = ({ updateCartItemsCount }) => (
 );
 
 const App = () => {
-  const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [cartItems, setCartItems] = useState(0);
 
+  const updateCartHandle = async (updatedCart) => {
+    setCartItems(updatedCart);
+    await AsyncStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
   const fetchCartItemsCount = async () => {
     try {
-      const cartItems = await AsyncStorage.getItem("cart");
-      const parsedCartItems = JSON.parse(cartItems);
-      const count = parsedCartItems ? parsedCartItems.length : 0;
-      setCartItemsCount(count);
+      const cartItemsFromLocal = await AsyncStorage.getItem("cart");
+      let cart = cartItemsFromLocal ? JSON.parse(cartItemsFromLocal) : [];
+      setCartItems(cart);
     } catch (error) {
       console.error("Error fetching cart items count:", error);
     }
@@ -81,9 +86,9 @@ const App = () => {
                         size={size}
                         color={color}
                       />
-                      {cartItemsCount > 0 && (
+                      {cartItems.length > 0 && (
                         <View style={styles.badgeContainer}>
-                          <Text style={styles.badge}>{cartItemsCount}</Text>
+                          <Text style={styles.badge}>{cartItems.length}</Text>
                         </View>
                       )}
                     </View>
@@ -100,11 +105,16 @@ const App = () => {
               {(props) => (
                 <HomeStack
                   {...props}
+                  cartItems={cartItems}
+                  setCartItems={updateCartHandle}
                   updateCartItemsCount={updateCartItemsCount}
                 />
               )}
             </Tab.Screen>
-            <Tab.Screen name="Cart" component={Cart} />
+
+            <Tab.Screen name="Cart">
+              {() => <Cart cart={cartItems} setCartItems={updateCartHandle} />}
+            </Tab.Screen>
           </Tab.Navigator>
         </NavigationContainer>
       </SafeAreaView>

@@ -11,35 +11,13 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 
-const CartScreen = ({ navigation }) => {
-  const [cart, setCart] = useState([]);
-
-  const fetchCart = async () => {
-    const cartItems = await AsyncStorage.getItem("cart");
-    if (cartItems) {
-      setCart(JSON.parse(cartItems));
-    }
-  };
-
-  const updateCart = async (updatedCart) => {
-    setCart(updatedCart);
-    await AsyncStorage.setItem("cart", JSON.stringify(updatedCart));
-  };
-
-  useEffect(() => {
-    fetchCart();
-  }, []);
-
-  useFocusEffect(
-    useCallback(() => {
-      fetchCart();
-    }, [])
-  );
+const CartScreen = ({ navigation, cart, setCartItems }) => {
+  console.log(cart);
 
   const incrementQuantity = (index) => {
     const updatedCart = [...cart];
     updatedCart[index].quantity += 1;
-    updateCart(updatedCart);
+    setCartItems(updatedCart);
   };
 
   const decrementQuantity = (index) => {
@@ -49,13 +27,14 @@ const CartScreen = ({ navigation }) => {
     } else {
       updatedCart.splice(index, 1);
     }
-    updateCart(updatedCart);
+    setCartItems(updatedCart);
   };
 
-  const removeItem = (index) => {
+  const removeItem = async (index) => {
     const updatedCart = [...cart];
     updatedCart.splice(index, 1);
-    updateCart(updatedCart);
+    setCartItems(updatedCart);
+    // await AsyncStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
   const renderItem = ({ item, index }) => (

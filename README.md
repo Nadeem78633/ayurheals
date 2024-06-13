@@ -1,6 +1,6 @@
 
 
-# 🛒 E-Commerce App 
+# 🛒 E-Commerce React Native App 
 
 Welcome to our exciting E-Commerce App  
 
